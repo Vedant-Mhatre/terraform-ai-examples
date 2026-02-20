@@ -2,6 +2,10 @@
 
 This example creates an IAM role in a target account that a CI/CD role in another account can assume.
 
+## Architecture
+
+![Cross Account Deploy Role Architecture](./architecture.svg)
+
 ## Why This Is Useful
 
 Most teams run Terraform from a centralized build account but deploy into separate workload accounts. This is the baseline trust and permission pattern.

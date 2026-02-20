@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="Cross account terraform deploy role architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3f1d2e"/>
+      <stop offset="100%" stop-color="#6b2b4a"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#f9a8d4"/>
+    </marker>
+    <style>
+      .title { fill: #ffe9f5; font: 700 32px 'Segoe UI', Arial, sans-serif; }
+      .subtitle { fill: #fbcfe8; font: 500 16px 'Segoe UI', Arial, sans-serif; }
+      .zone { fill: #5b2440; stroke: #ec4899; stroke-width: 2; rx: 16; }
+      .card { fill: #6e2f4e; stroke: #f9a8d4; stroke-width: 2; rx: 12; }
+      .label { fill: #fff1f9; font: 600 16px 'Segoe UI', Arial, sans-serif; }
+      .small { fill: #ffdced; font: 500 13px 'Segoe UI', Arial, sans-serif; }
+      .line { stroke: #f9a8d4; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="52" class="title">Cross-Account Terraform Deploy Role</text>
+  <text x="40" y="80" class="subtitle">Central CI account assumes target-account role with external ID protection</text>
+
+  <rect x="40" y="120" width="560" height="580" class="zone"/>
+  <text x="60" y="152" class="label">Build / CI Account</text>
+
+  <rect x="680" y="120" width="560" height="580" class="zone"/>
+  <text x="700" y="152" class="label">Target Workload Account</text>
+
+  <rect x="100" y="260" width="420" height="180" class="card"/>
+  <text x="120" y="298" class="label">CI Role (trusted principal)</text>
+  <text x="120" y="325" class="small">GitHub Actions / pipeline runner</text>
+  <text x="120" y="351" class="small">Has sts:AssumeRole permission</text>
+
+  <rect x="740" y="240" width="430" height="220" class="card"/>
+  <text x="760" y="278" class="label">Terraform Deploy Role</text>
+  <text x="760" y="305" class="small">Trust policy restricts principal + external ID</text>
+  <text x="760" y="331" class="small">Optional admin OR scoped policy mode</text>
+  <text x="760" y="357" class="small">Used by provider assume_role block</text>
+
+  <rect x="760" y="500" width="430" height="150" class="card"/>
+  <text x="780" y="538" class="label">Managed Resources</text>
+  <text x="780" y="565" class="small">VPC / ECS / S3 / IAM / SageMaker / etc.</text>
+
+  <path d="M520 350 L740 350" class="line"/>
+  <text x="560" y="330" class="small">sts:AssumeRole + external_id</text>
+  <path d="M955 460 L955 500" class="line"/>
+
+  <text x="980" y="685" class="small">Generated for terraform-ai-examples</text>
+</svg>

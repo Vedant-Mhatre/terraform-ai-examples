@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="Terraform state backend architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b1a0d"/>
+      <stop offset="100%" stop-color="#5b3a1b"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#fdba74"/>
+    </marker>
+    <style>
+      .title { fill: #fff3e6; font: 700 32px 'Segoe UI', Arial, sans-serif; }
+      .subtitle { fill: #ffd7b5; font: 500 16px 'Segoe UI', Arial, sans-serif; }
+      .zone { fill: #4a2f17; stroke: #f97316; stroke-width: 2; rx: 16; }
+      .card { fill: #5a381a; stroke: #fdba74; stroke-width: 2; rx: 12; }
+      .label { fill: #fff6ee; font: 600 16px 'Segoe UI', Arial, sans-serif; }
+      .small { fill: #ffe2cc; font: 500 13px 'Segoe UI', Arial, sans-serif; }
+      .line { stroke: #fdba74; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="52" class="title">Hardened Terraform State Backend</text>
+  <text x="40" y="80" class="subtitle">Encrypted state, locking, versioning, and transport policy guardrails</text>
+
+  <rect x="40" y="120" width="1200" height="580" class="zone"/>
+  <text x="60" y="152" class="label">AWS Account</text>
+
+  <rect x="90" y="220" width="260" height="130" class="card"/>
+  <text x="110" y="258" class="label">Terraform Runner</text>
+  <text x="110" y="285" class="small">CI/CD role or engineer laptop</text>
+
+  <rect x="420" y="200" width="300" height="170" class="card"/>
+  <text x="440" y="238" class="label">S3 State Bucket</text>
+  <text x="440" y="265" class="small">Versioning enabled</text>
+  <text x="440" y="291" class="small">Public access blocked</text>
+  <text x="440" y="317" class="small">TLS-only bucket policy</text>
+
+  <rect x="780" y="210" width="380" height="150" class="card"/>
+  <text x="800" y="248" class="label">KMS Key</text>
+  <text x="800" y="275" class="small">State object encryption</text>
+  <text x="800" y="301" class="small">Rotation enabled + scoped principals</text>
+
+  <rect x="420" y="440" width="300" height="150" class="card"/>
+  <text x="440" y="478" class="label">DynamoDB Lock Table</text>
+  <text x="440" y="505" class="small">Prevents concurrent writes</text>
+  <text x="440" y="531" class="small">PITR + SSE enabled</text>
+
+  <rect x="830" y="440" width="330" height="150" class="card"/>
+  <text x="850" y="478" class="label">Other Terraform Stacks</text>
+  <text x="850" y="505" class="small">Consume backend config snippet</text>
+
+  <path d="M350 280 L420 280" class="line"/>
+  <path d="M720 270 L780 270" class="line"/>
+  <path d="M570 370 L570 440" class="line"/>
+  <path d="M720 290 L860 440" class="line"/>
+  <path d="M720 520 L830 520" class="line"/>
+
+  <text x="980" y="685" class="small">Generated for terraform-ai-examples</text>
+</svg>

@@ -6,6 +6,10 @@ This example creates an ingestion path commonly used in data platforms:
 - Lambda processes events asynchronously
 - failures land in DLQ with CloudWatch alarming
 
+## Architecture
+
+![Event Driven Ingestion Architecture](./architecture.svg)
+
 ## Why This Is Useful
 
 This pattern absorbs producer spikes, isolates retry behavior, and gives clear operational failure handling.

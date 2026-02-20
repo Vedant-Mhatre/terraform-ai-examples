@@ -6,6 +6,10 @@ This example creates a secure remote backend with:
 - KMS encryption with rotation
 - TLS-only S3 bucket policy
 
+## Architecture
+
+![Terraform State Backend Architecture](./architecture.svg)
+
 ## Why This Is Useful
 
 Remote state hardening is the first thing most teams miss. This baseline is designed for real use in multi-env pipelines.

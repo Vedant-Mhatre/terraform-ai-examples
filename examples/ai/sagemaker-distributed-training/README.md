@@ -6,6 +6,10 @@ This example models a realistic foundation-model fine-tuning stack:
 - checkpointing and output artifacts in encrypted S3
 - explicit switch to avoid accidental expensive runs
 
+## Architecture
+
+![SageMaker Distributed Training Architecture](./architecture.svg)
+
 ## Why This Is Useful
 
 Teams usually need more than "hello world" SageMaker. This layout is suitable for:

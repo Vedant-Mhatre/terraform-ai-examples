@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="SageMaker distributed training architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1f3a"/>
+      <stop offset="100%" stop-color="#163a5f"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#93c5fd"/>
+    </marker>
+    <style>
+      .title { fill: #e5f0ff; font: 700 32px 'Segoe UI', Arial, sans-serif; }
+      .subtitle { fill: #bfd7ff; font: 500 16px 'Segoe UI', Arial, sans-serif; }
+      .zone { fill: #0f2d4f; stroke: #3b82f6; stroke-width: 2; rx: 16; }
+      .card { fill: #122f54; stroke: #93c5fd; stroke-width: 2; rx: 12; }
+      .label { fill: #f8fbff; font: 600 16px 'Segoe UI', Arial, sans-serif; }
+      .small { fill: #cfe1ff; font: 500 13px 'Segoe UI', Arial, sans-serif; }
+      .line { stroke: #93c5fd; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="52" class="title">SageMaker Distributed Training</text>
+  <text x="40" y="80" class="subtitle">Private VPC training with spot, encrypted artifacts, and checkpoint resume</text>
+
+  <rect x="40" y="120" width="1200" height="580" class="zone"/>
+  <text x="60" y="152" class="label">AWS Account / VPC</text>
+
+  <rect x="90" y="210" width="250" height="120" class="card"/>
+  <text x="110" y="248" class="label">Input Dataset</text>
+  <text x="110" y="275" class="small">S3 train prefix</text>
+
+  <rect x="440" y="180" width="390" height="200" class="card"/>
+  <text x="460" y="220" class="label">SageMaker Training Job</text>
+  <text x="460" y="248" class="small">ml.g5/ml.p4d, instance_count > 1</text>
+  <text x="460" y="274" class="small">network_isolation = true</text>
+  <text x="460" y="300" class="small">managed_spot_training = true</text>
+  <text x="460" y="326" class="small">inter-container encryption = true</text>
+
+  <rect x="910" y="190" width="280" height="130" class="card"/>
+  <text x="930" y="228" class="label">IAM Execution Role</text>
+  <text x="930" y="255" class="small">Least-privilege S3 + logs + ECR</text>
+
+  <rect x="90" y="420" width="320" height="180" class="card"/>
+  <text x="110" y="458" class="label">Private Subnets</text>
+  <text x="110" y="485" class="small">SageMaker ENIs + security group</text>
+  <text x="110" y="511" class="small">No public ingress</text>
+
+  <rect x="520" y="430" width="300" height="170" class="card"/>
+  <text x="540" y="468" class="label">Checkpoint Bucket</text>
+  <text x="540" y="495" class="small">s3://artifacts/checkpoints</text>
+  <text x="540" y="521" class="small">Resume after interruption</text>
+
+  <rect x="910" y="430" width="280" height="170" class="card"/>
+  <text x="930" y="468" class="label">Model Artifacts</text>
+  <text x="930" y="495" class="small">Encrypted S3 output</text>
+  <text x="930" y="521" class="small">Model tar + metrics</text>
+
+  <path d="M340 270 L440 270" class="line"/>
+  <path d="M830 250 L910 250" class="line"/>
+  <path d="M635 380 L635 430" class="line"/>
+  <path d="M760 380 L970 430" class="line"/>
+  <path d="M540 360 L300 420" class="line"/>
+
+  <text x="975" y="685" class="small">Generated for terraform-ai-examples</text>
+</svg>

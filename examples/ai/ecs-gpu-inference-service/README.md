@@ -6,6 +6,10 @@ This example deploys a production-style inference service with:
 - ECS capacity provider + ASG for host scaling
 - service-level autoscaling based on CPU utilization
 
+## Architecture
+
+![ECS GPU Inference Architecture](./architecture.svg)
+
 ## Why This Is Useful
 
 It mirrors common self-managed inference stacks where teams need:
