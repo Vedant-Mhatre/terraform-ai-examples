@@ -19,6 +19,10 @@ crash.*.log
 *.p12
 *.jks
 
+# Python artifacts
+__pycache__/
+*.pyc
+
 # OS/editor noise
 .DS_Store
 .vscode/
