@@ -28,4 +28,5 @@ Use this before promoting any example-derived stack to production.
 - Validation steps are automated or documented clearly.
 - Logs/metrics are enabled and retained appropriately.
 - On-call runbook entries are created for key alarms.
+- Incident runbook from `docs/incidents/` is reviewed and rehearsed.
 - Team ownership for the stack is explicit.

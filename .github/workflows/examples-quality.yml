@@ -22,3 +22,11 @@ jobs:
         run: |
           chmod +x scripts/validate_examples.sh
           scripts/validate_examples.sh
+
+      - name: Smoke test cost estimator
+        run: |
+          python3 scripts/estimate_costs.py --example ecs-gpu-inference-service --tfvars examples/ai/ecs-gpu-inference-service/terraform.tfvars.example --json >/dev/null
+          python3 scripts/estimate_costs.py --example sagemaker-distributed-training --tfvars examples/ai/sagemaker-distributed-training/terraform.tfvars.example --json >/dev/null
+          python3 scripts/estimate_costs.py --example event-driven-ingestion-pipeline --tfvars examples/data/event-driven-ingestion-pipeline/terraform.tfvars.example --json >/dev/null
+          python3 scripts/estimate_costs.py --example hardened-terraform-state-backend --tfvars examples/platform/hardened-terraform-state-backend/terraform.tfvars.example --json >/dev/null
+          python3 scripts/estimate_costs.py --example cross-account-terraform-deploy-role --tfvars examples/security/cross-account-terraform-deploy-role/terraform.tfvars.example --json >/dev/null

@@ -1,0 +1,33 @@
+site_name: Terraform AI Examples
+site_description: Production-style AWS Terraform examples for learning, teaching, and real deployments.
+site_url: https://vedant-mhatre.github.io/terraform-ai-examples/
+repo_url: https://github.com/Vedant-Mhatre/terraform-ai-examples
+repo_name: Vedant-Mhatre/terraform-ai-examples
+edit_uri: edit/master/docs/
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: mkdocs
+
+nav:
+  - Home: index.md
+  - Why This Repo: why-this-repo.md
+  - Learning Paths: learning-paths.md
+  - Teaching Playbook: teaching-playbook.md
+  - Examples:
+      - Catalog: example-catalog.md
+      - ECS GPU Inference: examples/ecs-gpu-inference-service.md
+      - SageMaker Distributed Training: examples/sagemaker-distributed-training.md
+      - Event-Driven Ingestion Pipeline: examples/event-driven-ingestion-pipeline.md
+      - Hardened Terraform State Backend: examples/hardened-terraform-state-backend.md
+      - Cross-Account Terraform Deploy Role: examples/cross-account-terraform-deploy-role.md
+  - Incident Runbooks:
+      - ECS GPU Inference Incident: incidents/ai-ecs-gpu-inference-service.md
+      - SageMaker Training Incident: incidents/ai-sagemaker-distributed-training.md
+      - Ingestion Pipeline Incident: incidents/data-event-driven-ingestion-pipeline.md
+      - State Backend Incident: incidents/platform-hardened-terraform-state-backend.md
+      - Cross-Account Role Incident: incidents/security-cross-account-terraform-deploy-role.md
+  - Cost Estimation: cost-estimator.md
+  - Production Readiness: production-readiness-checklist.md
+  - Quality Bar: quality-bar.md

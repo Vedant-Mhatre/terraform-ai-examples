@@ -21,6 +21,7 @@ scripts/validate_examples.sh
 - Prefer practical patterns over generic tutorials.
 - Explain tradeoffs (cost, security, operations), not only resource syntax.
 - Include at least one operational safeguard.
+- Add or update the corresponding incident runbook in `docs/incidents/`.
 - Keep examples composable and easy to adapt.
 
 ## Pull Request Expectations

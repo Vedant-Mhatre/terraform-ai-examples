@@ -8,7 +8,8 @@ Use this guide to run internal workshops or onboarding sessions.
 2. Architecture walkthrough (15 min): diagram + critical data/control paths.
 3. Terraform deep dive (20 min): resources, variables, and outputs.
 4. Hands-on apply/validate (30 min): learners run the validation checklist.
-5. Debrief (15 min): cost, risk, and production extension discussion.
+5. Incident drill (10 min): use the paired runbook and discuss response priorities.
+6. Debrief (5 min): cost, risk, and production extension discussion.
 
 ## Instructor Checklist
 

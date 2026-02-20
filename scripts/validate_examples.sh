@@ -20,6 +20,7 @@ required_sections=(
   "## Real-World Use Case"
   "## Usage"
   "## Validation Steps"
+  "## Incident Simulation"
   "## Cost and Safety"
   "## Cleanup"
   "## Next Improvements"
@@ -30,7 +31,11 @@ errors=0
 check_dir() {
   local dir="$1"
   local rel_dir
+  local rel_example_path
+  local incident_doc
   rel_dir="${dir#"$ROOT_DIR/"}"
+  rel_example_path="${rel_dir#examples/}"
+  incident_doc="$ROOT_DIR/docs/incidents/${rel_example_path//\//-}.md"
 
   echo "Checking $rel_dir"
 
@@ -57,6 +62,11 @@ check_dir() {
       echo "  [ERROR] architecture.svg looks too small ($size bytes)"
       errors=$((errors + 1))
     fi
+  fi
+
+  if [[ ! -f "$incident_doc" ]]; then
+    echo "  [ERROR] Missing incident runbook: ${incident_doc#"$ROOT_DIR/"}"
+    errors=$((errors + 1))
   fi
 
   if command -v terraform >/dev/null 2>&1; then

@@ -17,6 +17,8 @@ Because the hard part is not generating Terraform lines. The hard part is mainta
 - End-to-end examples with architecture visuals and runnable code.
 - "What you'll learn" and "why this matters" context per example.
 - Operationally useful patterns (DLQ alarms, remote state hardening, cross-account IAM, GPU scaling).
+- Incident playbooks tied to each example for failure-response training.
+- Cost-estimation tooling to compare variable decisions before apply.
 - CI checks that prevent documentation/code drift.
 - Contributor standards that raise quality instead of accumulating random snippets.
 

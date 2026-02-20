@@ -25,4 +25,5 @@ List exact commands/tests you ran and the outcomes.
 - [ ] `scripts/validate_examples.sh` passes
 - [ ] Architecture diagram is present/updated
 - [ ] README includes required sections from `docs/quality-bar.md`
+- [ ] Matching incident runbook in `docs/incidents/` is present/updated
 - [ ] Example still teaches a practical production pattern

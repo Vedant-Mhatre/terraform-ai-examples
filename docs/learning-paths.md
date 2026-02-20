@@ -39,4 +39,6 @@ For each example:
 1. Read `What You'll Learn` and architecture.
 2. Run `terraform plan` and predict key resources before apply.
 3. Apply and execute the README validation steps.
-4. Tear down and document one production hardening improvement.
+4. Walk through the paired runbook in `docs/incidents/`.
+5. Estimate cost impact using `scripts/estimate_costs.py`.
+6. Tear down and document one production hardening improvement.

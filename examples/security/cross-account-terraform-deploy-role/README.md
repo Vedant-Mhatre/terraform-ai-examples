@@ -41,6 +41,10 @@ terraform output assume_role_snippet
 
 3. From the trusted account, call STS assume-role with the correct external ID and confirm access works.
 
+## Incident Simulation
+
+- Runbook: `../../../docs/incidents/security-cross-account-terraform-deploy-role.md`
+
 ## Cost and Safety
 
 - Estimated cost risk: low (IAM-only pattern).

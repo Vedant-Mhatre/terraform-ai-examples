@@ -31,6 +31,10 @@ terraform apply
 2. Step to verify outputs
 3. Step to verify expected failure handling
 
+## Incident Simulation
+
+- Runbook: `../../docs/incidents/<domain>-<example-name>.md`
+
 ## Cost and Safety
 
 - Expected cost range:

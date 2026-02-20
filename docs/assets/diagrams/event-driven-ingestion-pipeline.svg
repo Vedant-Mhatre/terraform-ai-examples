@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="Event driven ingestion architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#67e8f9"/>
+    </marker>
+    <style>
+      .title { fill: #e2f8ff; font: 700 32px 'Segoe UI', Arial, sans-serif; }
+      .subtitle { fill: #bae6fd; font: 500 16px 'Segoe UI', Arial, sans-serif; }
+      .zone { fill: #1e293b; stroke: #06b6d4; stroke-width: 2; rx: 16; }
+      .card { fill: #26364d; stroke: #67e8f9; stroke-width: 2; rx: 12; }
+      .label { fill: #f0fbff; font: 600 16px 'Segoe UI', Arial, sans-serif; }
+      .small { fill: #d6f4ff; font: 500 13px 'Segoe UI', Arial, sans-serif; }
+      .line { stroke: #67e8f9; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="52" class="title">Event-Driven Ingestion Pipeline</text>
+  <text x="40" y="80" class="subtitle">S3 notifications buffered by SQS and processed asynchronously with DLQ alarms</text>
+
+  <rect x="40" y="120" width="1200" height="580" class="zone"/>
+  <text x="60" y="152" class="label">AWS Account</text>
+
+  <rect x="90" y="210" width="240" height="120" class="card"/>
+  <text x="110" y="248" class="label">Producers</text>
+  <text x="110" y="275" class="small">Upload raw objects</text>
+
+  <rect x="380" y="200" width="270" height="140" class="card"/>
+  <text x="400" y="238" class="label">Raw S3 Bucket</text>
+  <text x="400" y="265" class="small">ObjectCreated events</text>
+
+  <rect x="720" y="200" width="230" height="140" class="card"/>
+  <text x="740" y="238" class="label">SQS Events Queue</text>
+  <text x="740" y="265" class="small">Retry buffer</text>
+
+  <rect x="1000" y="200" width="200" height="140" class="card"/>
+  <text x="1020" y="238" class="label">DLQ</text>
+  <text x="1020" y="265" class="small">Poison messages</text>
+
+  <rect x="500" y="440" width="260" height="150" class="card"/>
+  <text x="520" y="478" class="label">Lambda Processor</text>
+  <text x="520" y="505" class="small">Reads SQS batch</text>
+  <text x="520" y="531" class="small">Transforms metadata</text>
+
+  <rect x="820" y="440" width="300" height="150" class="card"/>
+  <text x="840" y="478" class="label">Processed S3 Bucket</text>
+  <text x="840" y="505" class="small">Writes normalized payloads</text>
+
+  <rect x="160" y="440" width="250" height="150" class="card"/>
+  <text x="180" y="478" class="label">CloudWatch Alarm</text>
+  <text x="180" y="505" class="small">DLQ visible messages &gt; 0</text>
+
+  <path d="M330 270 L380 270" class="line"/>
+  <path d="M650 270 L720 270" class="line"/>
+  <path d="M950 270 L1000 270" class="line"/>
+  <path d="M830 340 L640 440" class="line"/>
+  <path d="M760 520 L820 520" class="line"/>
+  <path d="M1000 320 L300 440" class="line"/>
+
+  <text x="980" y="685" class="small">Generated for terraform-ai-examples</text>
+</svg>

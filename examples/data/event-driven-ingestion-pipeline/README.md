@@ -45,6 +45,10 @@ aws s3 cp ./sample.json "s3://$(terraform output -raw raw_bucket_name)/events/sa
 
 4. Simulate a failure path and verify DLQ/alarm behavior.
 
+## Incident Simulation
+
+- Runbook: `../../../docs/incidents/data-event-driven-ingestion-pipeline.md`
+
 ## Cost and Safety
 
 - Estimated cost risk: medium (cost scales with event volume and Lambda invocations).

@@ -13,6 +13,11 @@ AI assistants can generate snippets fast, but they usually miss repository-level
 
 Detailed rationale: [`docs/why-this-repo.md`](docs/why-this-repo.md).
 
+## Docs Portal
+
+- GitHub Pages portal: [https://vedant-mhatre.github.io/terraform-ai-examples/](https://vedant-mhatre.github.io/terraform-ai-examples/)
+- Source files for the portal live in `docs/` and are deployed by `.github/workflows/docs-pages.yml`.
+
 ## Example Catalog
 
 | Path | Domain | Difficulty | Estimated Cost Risk | Primary Outcome |
@@ -49,6 +54,12 @@ terraform apply
 - CI workflow runs quality checks on push/PR: `.github/workflows/examples-quality.yml`
 - Contribution quality bar: [`docs/quality-bar.md`](docs/quality-bar.md)
 - Convenience command: `make validate`
+
+## Incident and Cost Tooling
+
+- Incident playbooks: `docs/incidents/` (one runbook per example)
+- Cost estimator script: `scripts/estimate_costs.py`
+- Cost estimation guide: [`docs/cost-estimator.md`](docs/cost-estimator.md)
 
 ## For Instructors / Team Leads
 

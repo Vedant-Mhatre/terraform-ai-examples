@@ -49,6 +49,10 @@ $(terraform output -raw start_execution_command)
 
 3. Verify execution status and check output/checkpoint objects in the artifact bucket.
 
+## Incident Simulation
+
+- Runbook: `../../../docs/incidents/ai-sagemaker-distributed-training.md`
+
 ## Cost and Safety
 
 - Estimated cost risk: very high (GPU training instances dominate cost).

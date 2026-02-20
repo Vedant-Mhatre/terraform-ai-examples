@@ -43,6 +43,10 @@ terraform output backend_hcl_snippet
 
 3. Attempt a second Terraform operation concurrently in another terminal to verify locking behavior.
 
+## Incident Simulation
+
+- Runbook: `../../../docs/incidents/platform-hardened-terraform-state-backend.md`
+
 ## Cost and Safety
 
 - Estimated cost risk: low.

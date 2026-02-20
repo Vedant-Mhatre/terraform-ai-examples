@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="ECS GPU inference architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#132a13"/>
+      <stop offset="100%" stop-color="#1e4d2b"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#86efac"/>
+    </marker>
+    <style>
+      .title { fill: #e8fff1; font: 700 32px 'Segoe UI', Arial, sans-serif; }
+      .subtitle { fill: #c8f6d8; font: 500 16px 'Segoe UI', Arial, sans-serif; }
+      .zone { fill: #173a22; stroke: #22c55e; stroke-width: 2; rx: 16; }
+      .card { fill: #214a2d; stroke: #86efac; stroke-width: 2; rx: 12; }
+      .label { fill: #f1fff5; font: 600 16px 'Segoe UI', Arial, sans-serif; }
+      .small { fill: #d3ffe2; font: 500 13px 'Segoe UI', Arial, sans-serif; }
+      .line { stroke: #86efac; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="url(#bg)"/>
+  <text x="40" y="52" class="title">ECS GPU Inference Service</text>
+  <text x="40" y="80" class="subtitle">ALB + ECS EC2 GPU hosts + autoscaling for model serving</text>
+
+  <rect x="40" y="120" width="1200" height="580" class="zone"/>
+  <text x="60" y="152" class="label">AWS VPC</text>
+
+  <rect x="90" y="210" width="240" height="120" class="card"/>
+  <text x="110" y="248" class="label">Clients</text>
+  <text x="110" y="275" class="small">API consumers / apps</text>
+
+  <rect x="380" y="190" width="260" height="140" class="card"/>
+  <text x="400" y="228" class="label">Application Load Balancer</text>
+  <text x="400" y="255" class="small">HTTP listener + health checks</text>
+
+  <rect x="700" y="180" width="460" height="210" class="card"/>
+  <text x="720" y="218" class="label">ECS Cluster</text>
+  <text x="720" y="245" class="small">Capacity Provider -> ASG GPU hosts</text>
+  <text x="720" y="271" class="small">Task Definition requests GPU</text>
+  <text x="720" y="297" class="small">Service autoscaling (CPU target)</text>
+
+  <rect x="100" y="430" width="260" height="160" class="card"/>
+  <text x="120" y="468" class="label">CloudWatch Logs</text>
+  <text x="120" y="495" class="small">/ecs/inference group</text>
+
+  <rect x="420" y="430" width="280" height="160" class="card"/>
+  <text x="440" y="468" class="label">ECR Image</text>
+  <text x="440" y="495" class="small">Inference container</text>
+
+  <rect x="760" y="430" width="400" height="160" class="card"/>
+  <text x="780" y="468" class="label">Optional Model Bucket</text>
+  <text x="780" y="495" class="small">Task role read access for weights</text>
+
+  <path d="M330 270 L380 260" class="line"/>
+  <path d="M640 260 L700 270" class="line"/>
+  <path d="M860 390 L860 430" class="line"/>
+  <path d="M760 300 L560 430" class="line"/>
+  <path d="M760 320 L240 430" class="line"/>
+
+  <text x="980" y="685" class="small">Generated for terraform-ai-examples</text>
+</svg>

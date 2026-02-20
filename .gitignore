@@ -12,6 +12,7 @@ crash.*.log
 *.tfplan
 **/build/*
 **/processor.zip
+site/
 
 # Sensitive material
 *.pem

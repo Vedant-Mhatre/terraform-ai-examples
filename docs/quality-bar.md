@@ -19,6 +19,7 @@ A new or updated example should meet all items below.
 - `Real-World Use Case`
 - `Usage`
 - `Validation Steps`
+- `Incident Simulation`
 - `Cost and Safety`
 - `Cleanup`
 - `Next Improvements`
@@ -29,6 +30,7 @@ A new or updated example should meet all items below.
 - Avoid hardcoded secrets and avoid defaulting to expensive resources unnecessarily.
 - Include at least one operational safeguard (for example: DLQ, alarms, lock table, or policy constraints).
 - Document meaningful failure modes and mitigation guidance.
+- Add or update a matching incident runbook in `docs/incidents/`.
 
 ## Validation
 

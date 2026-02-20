@@ -42,6 +42,10 @@ curl -i "http://$(terraform output -raw alb_dns_name)/healthz"
 
 3. Verify ECS tasks are placed on GPU hosts and passing health checks.
 
+## Incident Simulation
+
+- Runbook: `../../../docs/incidents/ai-ecs-gpu-inference-service.md`
+
 ## Cost and Safety
 
 - Estimated cost risk: high (`g5`/`p` family pricing + always-on instances).
