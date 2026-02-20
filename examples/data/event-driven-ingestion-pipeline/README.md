@@ -45,6 +45,30 @@ aws s3 cp ./sample.json "s3://$(terraform output -raw raw_bucket_name)/events/sa
 
 4. Simulate a failure path and verify DLQ/alarm behavior.
 
+## System Design Sizing
+
+Assume:
+- peak ingest rate (`lambda`) = 500 events/sec
+- average steady ingest = 300 events/sec
+- average Lambda processing time = 300 ms
+- effective per-worker service rate (`mu`) ~= `1 / 0.3` = `3.33 events/sec`
+
+Concurrency math:
+- required concurrency for peak ~= `lambda / mu` = `500 / 3.33` ~= `150`
+- if actual concurrency is 100, max throughput ~= `100 * 3.33` ~= `333 events/sec`
+
+Backlog growth math:
+- backlog growth/sec = `lambda - throughput` = `500 - 333 = 167 events/sec`
+- one hour backlog at that deficit ~= `167 * 3600` ~= `601,200 events`
+
+Drain-time math:
+- if backlog is 601,200 and post-peak throughput advantage is 100 events/sec
+- drain time ~= `601,200 / 100` ~= `6,012 sec` (~100 min)
+
+Storage growth intuition:
+- if average raw object is 200 KB and 5M events/month
+- raw bucket growth ~= `5,000,000 * 200 KB` ~= `953 GB/month` (before compression/lifecycle)
+
 ## Incident Simulation
 
 - Runbook: `../../../docs/incidents/data-event-driven-ingestion-pipeline.md`

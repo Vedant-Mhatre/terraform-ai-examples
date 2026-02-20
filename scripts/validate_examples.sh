@@ -20,6 +20,7 @@ required_sections=(
   "## Real-World Use Case"
   "## Usage"
   "## Validation Steps"
+  "## System Design Sizing"
   "## Incident Simulation"
   "## Cost and Safety"
   "## Cleanup"

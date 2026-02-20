@@ -31,6 +31,13 @@ terraform apply
 2. Step to verify outputs
 3. Step to verify expected failure handling
 
+## System Design Sizing
+
+- Assumption 1:
+- Assumption 2:
+- Capacity formula:
+- Backlog/latency/storage formula:
+
 ## Incident Simulation
 
 - Runbook: `../../docs/incidents/<domain>-<example-name>.md`

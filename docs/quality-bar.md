@@ -19,6 +19,7 @@ A new or updated example should meet all items below.
 - `Real-World Use Case`
 - `Usage`
 - `Validation Steps`
+- `System Design Sizing`
 - `Incident Simulation`
 - `Cost and Safety`
 - `Cleanup`

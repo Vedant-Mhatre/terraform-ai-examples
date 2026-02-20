@@ -41,6 +41,30 @@ terraform output assume_role_snippet
 
 3. From the trusted account, call STS assume-role with the correct external ID and confirm access works.
 
+## System Design Sizing
+
+Assume:
+- 10 deployment pipelines
+- each runs 30 times/day across environments
+- one STS assume-role call per run
+
+STS call volume:
+- daily assume-role calls = `10 * 30 = 300`
+- monthly calls (~30d) = `300 * 30 = 9,000`
+
+Session-duration tradeoff:
+- current max session duration default in this example: 1 hour
+- shorter sessions reduce credential blast window but increase refresh frequency
+
+Blast-radius sizing:
+- risk grows with number of trusted principals and number of target accounts
+- rough exposure score (simplified) ~= `trusted_principals * target_accounts`
+- keep trusted principal set minimal and scoped per environment boundary
+
+Failure-budget style check:
+- if deployment SLO allows 99.9% successful assumes, monthly error budget ~= `9,000 * 0.001 = 9 failed assumptions`
+- alert if failed assumes exceed this threshold in a month
+
 ## Incident Simulation
 
 - Runbook: `../../../docs/incidents/security-cross-account-terraform-deploy-role.md`

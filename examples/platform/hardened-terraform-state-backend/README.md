@@ -43,6 +43,27 @@ terraform output backend_hcl_snippet
 
 3. Attempt a second Terraform operation concurrently in another terminal to verify locking behavior.
 
+## System Design Sizing
+
+Assume:
+- 5 Terraform stacks use this backend
+- each stack runs 20 applies/day
+- average state snapshot size = 2 MB
+- each apply creates one new versioned state object
+
+Request and growth math:
+- applies/day total = `5 * 20 = 100`
+- applies/month (~30d) = `100 * 30 = 3,000`
+- new state data/month ~= `3,000 * 2 MB` ~= `6,000 MB` (~5.86 GB) before lifecycle pruning
+
+Locking contention intuition:
+- if average lock hold is 45 sec and apply starts are bursty
+- shared single-key pipelines can queue quickly; separate keys/workspaces reduce contention sharply
+
+Recovery sizing:
+- with versioning enabled, rollback RTO is typically dominated by operator response time, not storage recovery
+- target operational RTO for bad state writes: <= 15 minutes with clear runbook ownership
+
 ## Incident Simulation
 
 - Runbook: `../../../docs/incidents/platform-hardened-terraform-state-backend.md`

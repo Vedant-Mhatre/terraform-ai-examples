@@ -49,6 +49,30 @@ $(terraform output -raw start_execution_command)
 
 3. Verify execution status and check output/checkpoint objects in the artifact bucket.
 
+## System Design Sizing
+
+Assume:
+- `instance_type = ml.p4d.24xlarge`
+- `instance_count = 2`
+- one training run takes 6 hours
+- managed spot is enabled
+
+Training capacity math:
+- instance-hours per run = `instance_count * run_hours` = `2 * 6` = `12 instance-hours`
+- if weekly retraining: monthly instance-hours ~= `12 * 4` = `48 instance-hours`
+
+Cost-intuition math (before exact pricing checks):
+- monthly compute ~= `effective_hourly_rate * instance_count * monthly_training_hours`
+- if on-demand hourly were `H`, spot-effective at ~35% is `0.35 * H`
+
+Schedule/SLO sizing:
+- if model refresh SLO is 24h and one run is 6h, max retries before SLO breach ~= `floor(24/6) - 1 = 3`
+- checkpoint interval target should keep lost work under 10 min per interruption
+
+Operational headroom:
+- keep `max_wait_seconds` well above expected runtime when using spot
+- keep artifact/checkpoint bucket lifecycle and monitoring aligned with retraining frequency
+
 ## Incident Simulation
 
 - Runbook: `../../../docs/incidents/ai-sagemaker-distributed-training.md`

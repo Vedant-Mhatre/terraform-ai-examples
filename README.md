@@ -8,6 +8,7 @@ AI assistants can generate snippets fast, but they usually miss repository-level
 - complete, runnable example directories (not isolated snippets)
 - architecture diagrams + Terraform code + usage docs together
 - explicit cost, risk, and operational guardrails
+- system-design sizing math (capacity, latency, backlog, or growth) per example
 - teaching-focused structure: learning goals, validation steps, and extensions
 - CI quality checks so examples stay maintainable over time
 

@@ -42,6 +42,30 @@ curl -i "http://$(terraform output -raw alb_dns_name)/healthz"
 
 3. Verify ECS tasks are placed on GPU hosts and passing health checks.
 
+## System Design Sizing
+
+Assume:
+- target p95 latency budget: 250 ms
+- one GPU task sustains ~8 RPS at ~70% GPU utilization
+- `gpus_per_task = 1`, `gpu_instance_type = g5.2xlarge` (1 GPU/host)
+- `service_desired_count = 2`, `asg_desired_size = 2`
+
+Capacity math:
+- service capacity ~= `tasks * rps_per_task` = `2 * 8` = `16 RPS` baseline
+- required hosts ~= `ceil((desired_tasks * gpus_per_task) / gpus_per_host)`
+- for 6 desired tasks with 1 GPU/task and 1 GPU/host: `ceil(6/1) = 6 hosts`
+
+Latency budget split (example):
+- ALB + network: 35 ms
+- model inference: 180 ms
+- serialization + response: 35 ms
+- total: 250 ms
+
+Failure-budget style check:
+- if peak is 40 RPS, baseline 16 RPS is not enough
+- needed tasks at 8 RPS/task: `ceil(40/8) = 5 tasks`
+- with this instance type, keep ASG max >= 5 to avoid prolonged `PENDING` tasks
+
 ## Incident Simulation
 
 - Runbook: `../../../docs/incidents/ai-ecs-gpu-inference-service.md`
