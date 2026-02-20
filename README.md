@@ -61,10 +61,10 @@ terraform apply
 - Cost estimator script: `scripts/estimate_costs.py`
 - Cost estimation guide: [`docs/cost-estimator.md`](docs/cost-estimator.md)
 
-## For Instructors / Team Leads
+## Optional Further Reading
 
-- Workshop-ready guide: [`docs/teaching-playbook.md`](docs/teaching-playbook.md)
-- Production hardening checklist: [`docs/production-readiness-checklist.md`](docs/production-readiness-checklist.md)
+- Teaching playbook (draft guidance, adapt before real use): [`docs/teaching-playbook.md`](docs/teaching-playbook.md)
+- Production checklist (reference material, validate in your environment): [`docs/production-readiness-checklist.md`](docs/production-readiness-checklist.md)
 
 ## Contributing
 

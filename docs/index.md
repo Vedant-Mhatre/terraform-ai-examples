@@ -20,6 +20,10 @@ Opinionated AWS Terraform examples designed for three outcomes:
 - Cost estimation tooling and spend guardrails.
 - CI checks to keep quality from drifting.
 
+## Practical Disclaimer
+
+This repository is designed as practical learning material and starting points. Validate every pattern in your own AWS account and constraints before production use.
+
 ## Quick Commands
 
 ```bash
