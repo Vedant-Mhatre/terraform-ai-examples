@@ -36,8 +36,8 @@ variable "s3_training_data_uri" {
   type        = string
 }
 
-variable "training_job_name" {
-  description = "Explicit SageMaker training job name."
+variable "pipeline_name" {
+  description = "Explicit SageMaker pipeline name."
   type        = string
   default     = ""
 }
@@ -78,22 +78,16 @@ variable "max_wait_seconds" {
   default     = 21600
 }
 
-variable "enable_training_job" {
-  description = "Set true to create/launch the training job. Default false avoids accidental spend."
-  type        = bool
-  default     = false
-}
-
 variable "hyperparameters" {
   description = "Hyperparameters passed to the container."
   type        = map(string)
   default = {
-    epochs            = "3"
-    per_device_bs     = "8"
-    gradient_accum    = "4"
-    learning_rate     = "2e-5"
-    save_steps        = "500"
-    logging_steps     = "50"
+    epochs         = "3"
+    per_device_bs  = "8"
+    gradient_accum = "4"
+    learning_rate  = "2e-5"
+    save_steps     = "500"
+    logging_steps  = "50"
   }
 }
 

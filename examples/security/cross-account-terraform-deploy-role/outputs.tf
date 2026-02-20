@@ -5,7 +5,7 @@ output "deploy_role_arn" {
 
 output "assume_role_snippet" {
   description = "Use this in your Terraform provider config in the CI/CD account."
-  value = <<-EOT
+  value       = <<-EOT
     provider "aws" {
       region = "${var.region}"
       assume_role {

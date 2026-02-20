@@ -8,7 +8,12 @@ output "artifact_bucket_name" {
   value       = aws_s3_bucket.artifacts.bucket
 }
 
-output "training_job_name" {
-  description = "Training job name (when enabled)."
-  value       = var.enable_training_job ? aws_sagemaker_training_job.distributed[0].name : local.computed_job_name
+output "pipeline_name" {
+  description = "SageMaker pipeline name for distributed training."
+  value       = aws_sagemaker_pipeline.distributed_training.pipeline_name
+}
+
+output "start_execution_command" {
+  description = "Run this command to trigger a pipeline execution."
+  value       = "aws sagemaker start-pipeline-execution --pipeline-name ${aws_sagemaker_pipeline.distributed_training.pipeline_name}"
 }

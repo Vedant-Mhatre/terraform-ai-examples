@@ -1,6 +1,6 @@
 # SageMaker Distributed GPU Training
 
-Launch a reproducible distributed training job for large-model fine-tuning with private networking, spot support, and checkpoint recovery.
+Define a reusable SageMaker training pipeline for multi-node GPU fine-tuning with private networking, spot support, and checkpoint recovery.
 
 ## Architecture
 
@@ -8,13 +8,13 @@ Launch a reproducible distributed training job for large-model fine-tuning with 
 
 ## What You'll Learn
 
-- How to define a multi-node SageMaker training job with Terraform.
+- How to provision a SageMaker training pipeline with Terraform.
 - How to reduce training cost using managed spot + checkpointing.
 - How to isolate training workloads in private subnets with restricted IAM.
 
 ## Real-World Use Case
 
-Used by ML platform teams running recurring fine-tuning jobs where cost and reliability both matter. This pattern helps recover from spot interruptions instead of restarting multi-hour training from scratch.
+Used by ML platform teams running recurring fine-tuning jobs where cost and reliability both matter. The pipeline definition is versioned in Git, while execution is triggered intentionally for each training run.
 
 ## Usage
 
@@ -22,36 +22,38 @@ Used by ML platform teams running recurring fine-tuning jobs where cost and reli
 cp terraform.tfvars.example terraform.tfvars
 terraform init
 terraform plan
+terraform apply
 ```
 
-By default, `enable_training_job = false` to avoid accidental GPU spend. Launch intentionally:
+Then trigger a training run explicitly:
 
 ```bash
-terraform apply -var='enable_training_job=true'
+$(terraform output -raw start_execution_command)
 ```
 
 ## Validation Steps
 
-1. Confirm role and artifact bucket outputs:
+1. Confirm role, artifact bucket, and pipeline outputs:
 
 ```bash
 terraform output sagemaker_execution_role_arn
 terraform output artifact_bucket_name
+terraform output pipeline_name
 ```
 
-2. If training was enabled, verify the job exists:
+2. Start one pipeline execution and capture the execution ARN:
 
 ```bash
-aws sagemaker describe-training-job --training-job-name "$(terraform output -raw training_job_name)"
+$(terraform output -raw start_execution_command)
 ```
 
-3. Confirm checkpoints or output artifacts appear in the artifact bucket.
+3. Verify execution status and check output/checkpoint objects in the artifact bucket.
 
 ## Cost and Safety
 
 - Estimated cost risk: very high (GPU training instances dominate cost).
 - Most expensive knobs: `instance_type`, `instance_count`, and runtime limits.
-- Built-in guardrails: `enable_training_job` switch, runtime/max-wait controls, managed spot option.
+- Built-in guardrails: execution is explicit (not auto-run on apply), managed spot option, runtime/max-wait controls.
 
 ## Cleanup
 
@@ -63,6 +65,6 @@ If you kept artifacts intentionally, empty the bucket manually only when you are
 
 ## Next Improvements
 
-- Add CloudWatch alarms for failed or prolonged training jobs.
+- Add CloudWatch alarms for failed or prolonged pipeline executions.
 - Add experiment tracking integration (for example, MLflow/W&B metadata sidecar).
 - Add per-team quota controls for instance families.

@@ -15,7 +15,7 @@ output "kms_key_arn" {
 
 output "backend_hcl_snippet" {
   description = "Paste this into backend config for other stacks."
-  value = <<-EOT
+  value       = <<-EOT
     bucket         = "${aws_s3_bucket.state.bucket}"
     key            = "envs/prod/terraform.tfstate"
     region         = "${var.region}"

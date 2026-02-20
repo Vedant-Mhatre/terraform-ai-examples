@@ -8,10 +8,90 @@ locals {
   training_bucket     = local.training_data_parts[0]
   training_prefix     = length(local.training_data_parts) > 1 ? join("/", slice(local.training_data_parts, 1, length(local.training_data_parts))) : ""
 
-  output_bucket_name = var.model_artifact_bucket_name != "" ? var.model_artifact_bucket_name : "${var.name_prefix}-${data.aws_caller_identity.current.account_id}-${var.region}-artifacts"
-  output_prefix      = "output"
-  checkpoint_prefix  = "checkpoints"
-  computed_job_name  = var.training_job_name != "" ? var.training_job_name : "${var.name_prefix}-${var.environment}"
+  output_bucket_name     = var.model_artifact_bucket_name != "" ? var.model_artifact_bucket_name : "${var.name_prefix}-${data.aws_caller_identity.current.account_id}-${var.region}-artifacts"
+  output_prefix          = "output"
+  checkpoint_prefix      = "checkpoints"
+  computed_pipeline_name = var.pipeline_name != "" ? var.pipeline_name : "${var.name_prefix}-${var.environment}"
+
+  training_output_data_config = merge(
+    {
+      S3OutputPath = "s3://${aws_s3_bucket.artifacts.bucket}/${local.output_prefix}"
+    },
+    var.kms_key_id != "" ? { KmsKeyId = var.kms_key_id } : {}
+  )
+
+  training_stopping_condition = merge(
+    {
+      MaxRuntimeInSeconds = var.max_runtime_seconds
+    },
+    var.use_spot_instances ? { MaxWaitTimeInSeconds = var.max_wait_seconds } : {}
+  )
+
+  training_step_arguments = {
+    AlgorithmSpecification = {
+      TrainingImage     = var.training_image_uri
+      TrainingInputMode = "File"
+    }
+    HyperParameters = var.hyperparameters
+    InputDataConfig = [
+      {
+        ChannelName = "training"
+        DataSource = {
+          S3DataSource = {
+            S3DataType             = "S3Prefix"
+            S3Uri                  = { Get = "Parameters.InputDataS3Uri" }
+            S3DataDistributionType = "FullyReplicated"
+          }
+        }
+        InputMode = "File"
+      }
+    ]
+    OutputDataConfig = local.training_output_data_config
+    ResourceConfig = {
+      InstanceCount  = { Get = "Parameters.InstanceCount" }
+      InstanceType   = { Get = "Parameters.InstanceType" }
+      VolumeSizeInGB = var.volume_size_gb
+    }
+    StoppingCondition         = local.training_stopping_condition
+    EnableManagedSpotTraining = var.use_spot_instances
+    CheckpointConfig = {
+      S3Uri     = "s3://${aws_s3_bucket.artifacts.bucket}/${local.checkpoint_prefix}"
+      LocalPath = "/opt/ml/checkpoints"
+    }
+    VpcConfig = {
+      SecurityGroupIds = [aws_security_group.training.id]
+      Subnets          = var.private_subnet_ids
+    }
+    RoleArn = aws_iam_role.sagemaker_execution.arn
+  }
+
+  pipeline_definition = jsonencode({
+    Version = "2020-12-01"
+    Parameters = [
+      {
+        Name         = "InputDataS3Uri"
+        Type         = "String"
+        DefaultValue = var.s3_training_data_uri
+      },
+      {
+        Name         = "InstanceType"
+        Type         = "String"
+        DefaultValue = var.instance_type
+      },
+      {
+        Name         = "InstanceCount"
+        Type         = "Integer"
+        DefaultValue = var.instance_count
+      }
+    ]
+    Steps = [
+      {
+        Name      = "DistributedTrainingStep"
+        Type      = "Training"
+        Arguments = local.training_step_arguments
+      }
+    ]
+  })
 }
 
 resource "aws_s3_bucket" "artifacts" {
@@ -147,64 +227,14 @@ resource "aws_iam_role_policy" "sagemaker_execution" {
   })
 }
 
-resource "aws_sagemaker_training_job" "distributed" {
-  count = var.enable_training_job ? 1 : 0
-
-  name     = local.computed_job_name
-  role_arn = aws_iam_role.sagemaker_execution.arn
-
-  algorithm_specification {
-    training_image     = var.training_image_uri
-    training_input_mode = "File"
-  }
-
-  enable_network_isolation                   = true
-  enable_inter_container_traffic_encryption  = true
-  enable_managed_spot_training               = var.use_spot_instances
-
-  hyperparameters = var.hyperparameters
-
-  input_data_config {
-    channel_name = "training"
-
-    data_source {
-      s3_data_source {
-        s3_data_type              = "S3Prefix"
-        s3_uri                    = var.s3_training_data_uri
-        s3_data_distribution_type = "FullyReplicated"
-      }
-    }
-
-    input_mode = "File"
-  }
-
-  output_data_config {
-    s3_output_path = "s3://${aws_s3_bucket.artifacts.bucket}/${local.output_prefix}"
-    kms_key_id     = var.kms_key_id != "" ? var.kms_key_id : null
-  }
-
-  resource_config {
-    instance_count         = var.instance_count
-    instance_type          = var.instance_type
-    volume_size_in_gb      = var.volume_size_gb
-  }
-
-  stopping_condition {
-    max_runtime_in_seconds = var.max_runtime_seconds
-    max_wait_time_in_seconds = var.use_spot_instances ? var.max_wait_seconds : null
-  }
-
-  checkpoint_config {
-    s3_uri     = "s3://${aws_s3_bucket.artifacts.bucket}/${local.checkpoint_prefix}"
-    local_path = "/opt/ml/checkpoints"
-  }
-
-  vpc_config {
-    security_group_ids = [aws_security_group.training.id]
-    subnets            = var.private_subnet_ids
-  }
+resource "aws_sagemaker_pipeline" "distributed_training" {
+  pipeline_name         = local.computed_pipeline_name
+  role_arn              = aws_iam_role.sagemaker_execution.arn
+  pipeline_display_name = local.computed_pipeline_name
+  pipeline_description  = "Distributed GPU training pipeline managed by Terraform."
+  pipeline_definition   = local.pipeline_definition
 
   tags = {
-    Name = local.computed_job_name
+    Name = local.computed_pipeline_name
   }
 }

@@ -6,6 +6,7 @@ private_subnet_ids = ["subnet-aaaa1111", "subnet-bbbb2222"]
 
 training_image_uri  = "123456789012.dkr.ecr.us-east-1.amazonaws.com/llm-train:latest"
 s3_training_data_uri = "s3://my-ml-datasets/foundation-model/train/"
+pipeline_name = "llm-finetune-prod"
 
 instance_type      = "ml.p4d.24xlarge"
 instance_count     = 2
@@ -13,6 +14,3 @@ volume_size_gb     = 1000
 use_spot_instances = true
 max_runtime_seconds = 28800
 max_wait_seconds    = 43200
-
-# Keep this false for safe planning. Set true only when you want to launch training.
-enable_training_job = false
