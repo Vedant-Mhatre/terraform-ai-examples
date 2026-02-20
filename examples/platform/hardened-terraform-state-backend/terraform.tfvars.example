@@ -1,0 +1,10 @@
+region      = "us-east-1"
+name_prefix = "company-terraform-state"
+
+# In production, keep this false.
+force_destroy = false
+
+# Optional: allow specific Terraform execution roles to use the KMS key.
+state_key_arn_principals = [
+  "arn:aws:iam::111122223333:role/platform-terraform-role"
+]

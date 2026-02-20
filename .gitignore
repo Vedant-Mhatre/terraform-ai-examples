@@ -1,18 +1,25 @@
-# Private/*
-# Private/.terraform
-*/.terraform
-terraform.tfstate
-terraform.tfstate.backup
-.terraform/plugins/registry.terraform.io/hashicorp/aws/3.6.0/linux_amd64/terraform-provider-aws_v3.6.0_x5
-*/.terraform/*
-.terraform/plugins/registry.terraform.io/hashicorp/aws/3.6.0/linux_amd64/*
-.terraform/plugins/selections.json
-myKP.pem
-.terraform.lock.hcl
-3-tier/aws/*
-jenkins-django-nginx/test-key.pem
-jenkins-django-nginx/temp.txt
-jenkins-django-nginx/crash.log
-jenkins-django-nginx/terraform.tfstate.1611915831.backup
-jenkins-django-nginx/chatbot_backend.pem
-jenkins-django-nginx/i-043b63e8791fb25df.log
+# Terraform state and working dirs
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!.terraform.lock.hcl
+
+# Plans and generated artifacts
+*.tfplan
+**/build/*
+**/processor.zip
+
+# Sensitive material
+*.pem
+*.key
+*.p12
+*.jks
+
+# OS/editor noise
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,16 @@
+region      = "us-east-1"
+environment = "prod"
+name_prefix = "platform-terraform"
+
+trusted_principal_arns = [
+  "arn:aws:iam::111122223333:role/github-actions-terraform"
+]
+
+external_id = "replace-this-with-a-random-shared-secret"
+
+# Keep false unless you intentionally want full admin on this role.
+allow_admin_access = false
+
+# Optional explicit state backend resources.
+state_bucket_arn = "arn:aws:s3:::company-terraform-state-123456789012-us-east-1"
+lock_table_arn   = "arn:aws:dynamodb:us-east-1:123456789012:table/company-terraform-state-locks"

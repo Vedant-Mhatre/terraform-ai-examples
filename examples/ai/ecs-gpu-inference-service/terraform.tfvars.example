@@ -1,0 +1,25 @@
+region      = "us-east-1"
+environment = "prod"
+name_prefix = "vision-infer"
+
+vpc_id             = "vpc-1234567890abcdef0"
+public_subnet_ids  = ["subnet-1111aaaa", "subnet-2222bbbb"]
+private_subnet_ids = ["subnet-3333cccc", "subnet-4444dddd"]
+
+container_image = "123456789012.dkr.ecr.us-east-1.amazonaws.com/object-detection-inference:latest"
+container_port  = 8080
+health_check_path = "/healthz"
+
+gpu_instance_type     = "g5.2xlarge"
+gpus_per_task         = 1
+asg_min_size          = 1
+asg_desired_size      = 2
+asg_max_size          = 6
+service_desired_count = 2
+service_min_count     = 2
+service_max_count     = 12
+
+cpu_target_utilization = 55
+
+# Optional: grant task role read-only access to model artifacts bucket.
+model_bucket_arn = "arn:aws:s3:::my-model-artifacts"

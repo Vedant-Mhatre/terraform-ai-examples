@@ -1,0 +1,13 @@
+region      = "us-east-1"
+environment = "prod"
+name_prefix = "orders-ingestion"
+
+lambda_timeout_seconds = 120
+lambda_memory_mb       = 1024
+
+# Optional: forward DLQ alarms to your incident channel.
+alarm_topic_arn = "arn:aws:sns:us-east-1:123456789012:platform-alerts"
+
+# Keep false outside ephemeral/test accounts.
+raw_bucket_force_destroy       = false
+processed_bucket_force_destroy = false

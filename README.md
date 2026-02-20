@@ -1,28 +1,49 @@
-<p align="center">
-    <img src="aws terraform githubb.jpg" alt="Logo" width="60%">
-</p>
+# Terraform AI Examples (AWS)
 
+Production-style Terraform examples for AWS workloads that teams actually run, including GPU-heavy AI training/inference and non-AI infrastructure patterns.
 
+## What Changed
 
-## About
-The goal of this project is to create a single repository with multiple AWS Terraform examples to create various architectures.
+This repository was rebuilt to remove outdated VPC/EC2 tutorial stacks and replace them with practical scenarios focused on:
+- security baselines
+- cost-aware architecture
+- platform operations
+- AI/ML GPU workloads
 
-## Getting Started
+## Repository Layout
 
-### Prerequisites
-* Terraform [(Installtion Process)](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-* AWS account
-* AWS CLI [(Installation Process)](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+| Path | Use Case |
+| --- | --- |
+| `examples/ai/sagemaker-distributed-training` | Multi-node GPU training with SageMaker, spot support, checkpointing, VPC isolation |
+| `examples/ai/ecs-gpu-inference-service` | ECS on EC2 GPU inference service behind ALB with autoscaling |
+| `examples/platform/hardened-terraform-state-backend` | Encrypted and locked S3 + DynamoDB backend for Terraform state |
+| `examples/data/event-driven-ingestion-pipeline` | S3 -> SQS -> Lambda pipeline with DLQ and operational alarms |
+| `examples/security/cross-account-terraform-deploy-role` | Cross-account IAM role pattern for CI/CD Terraform deployments |
 
-Get the project up and running locally in just 3 easy steps.
+## Quick Start
 
-1. Create a personal Fork of this repository.
+1. Pick one example directory.
+2. Copy `terraform.tfvars.example` to `terraform.tfvars` where provided.
+3. Run:
 
-2. **Clone** the fork with HTTPS, using your local terminal to a preferred location, and **cd** into the project.
-
+```bash
+terraform init
+terraform plan
+terraform apply
 ```
-git clone https://github.com/your_username/AWS-Terraform-Examples.git
-```
-```
-cd AWS-Terraform-Examples
-```
+
+## Guardrails
+
+- AI examples can be expensive (especially GPU instance families like `g5`, `p4`, `p5`).
+- Most examples include controls (min/max scaling, explicit variables, optional execution switches).
+- Always start with `terraform plan` and review cost impact before `apply`.
+
+## Recommended Usage Pattern
+
+- Keep each example in its own state file/workspace.
+- Use the `hardened-terraform-state-backend` example first, then migrate other examples to remote state.
+- Wire these examples into a CI pipeline using the `cross-account-terraform-deploy-role` pattern.
+
+## License
+
+MIT (`LICENSE`).
