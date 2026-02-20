@@ -1,23 +1,39 @@
 # Terraform AI Examples (AWS)
 
-Opinionated, production-style Terraform examples for AWS. Built for engineers who want to learn quickly and still ship patterns that hold up in real environments.
+[![Stars](https://img.shields.io/github/stars/Vedant-Mhatre/terraform-ai-examples?style=social)](https://github.com/Vedant-Mhatre/terraform-ai-examples/stargazers)
+[![Examples Quality](https://github.com/Vedant-Mhatre/terraform-ai-examples/actions/workflows/examples-quality.yml/badge.svg)](https://github.com/Vedant-Mhatre/terraform-ai-examples/actions/workflows/examples-quality.yml)
+[![Docs Portal](https://img.shields.io/badge/docs-live-0ea5e9)](https://blog.vmhatre.com/terraform-ai-examples/docs/)
+
+Production-style AWS Terraform examples with architecture diagrams, system-design sizing math, incident runbooks, and cost estimation tooling.
+
+If this repository helps your learning or projects, star it: [Star `terraform-ai-examples`](https://github.com/Vedant-Mhatre/terraform-ai-examples).
 
 ## Why This Repo (Instead of Just Asking ChatGPT/Claude)
 
-AI assistants can generate snippets fast, but they usually miss repository-level quality. This repo is useful because it provides:
-- complete, runnable example directories (not isolated snippets)
-- architecture diagrams + Terraform code + usage docs together
-- explicit cost, risk, and operational guardrails
-- system-design sizing math (capacity, latency, backlog, or growth) per example
-- teaching-focused structure: learning goals, validation steps, and extensions
-- CI quality checks so examples stay maintainable over time
+AI assistants generate snippets quickly, but learners and teams usually need more than snippets:
+- runnable, end-to-end example directories
+- architecture + code + validation in one place
+- system-design sizing math (capacity, latency, backlog, growth)
+- incident handling playbooks for failure scenarios
+- explicit cost and safety guardrails
+- repeatable quality checks in CI
 
 Detailed rationale: [`docs/why-this-repo.md`](docs/why-this-repo.md).
 
-## Docs Portal
+## Start In 5 Minutes
 
-- GitHub Pages portal: [https://vedant-mhatre.github.io/terraform-ai-examples/](https://vedant-mhatre.github.io/terraform-ai-examples/)
-- Source files for the portal live in `docs/` and are deployed by `.github/workflows/docs-pages.yml`.
+1. Open the docs portal: [https://blog.vmhatre.com/terraform-ai-examples/docs/](https://blog.vmhatre.com/terraform-ai-examples/docs/)
+2. Run quality checks:
+
+```bash
+make validate
+```
+
+3. Run a cost sizing estimate (no AWS deployment required):
+
+```bash
+python3 scripts/estimate_costs.py --example ecs-gpu-inference-service --tfvars examples/ai/ecs-gpu-inference-service/terraform.tfvars.example
+```
 
 ## Example Catalog
 
@@ -33,7 +49,7 @@ Detailed rationale: [`docs/why-this-repo.md`](docs/why-this-repo.md).
 
 - Platform Engineer track: state backend -> cross-account role -> ingestion pipeline
 - ML Platform track: state backend -> ECS GPU inference -> SageMaker training
-- Teaching/workshop track and weekly path planning: [`docs/learning-paths.md`](docs/learning-paths.md)
+- Structured paths: [`docs/learning-paths.md`](docs/learning-paths.md)
 
 ## How To Use
 
@@ -47,25 +63,38 @@ terraform plan
 terraform apply
 ```
 
-4. Follow each example README’s `Validation Steps` section before moving on.
+4. Follow `Validation Steps`, `System Design Sizing`, and `Incident Simulation` in each README.
+
+## Docs Portal
+
+- Live portal: [https://blog.vmhatre.com/terraform-ai-examples/docs/](https://blog.vmhatre.com/terraform-ai-examples/docs/)
+- Source: `docs/`
+- Deployment workflow: `.github/workflows/docs-pages.yml`
 
 ## Repo Quality Guardrails
 
-- Structural checks and optional Terraform validation: `scripts/validate_examples.sh`
-- CI workflow runs quality checks on push/PR: `.github/workflows/examples-quality.yml`
+- Structural and Terraform validation: `scripts/validate_examples.sh`
+- CI workflow: `.github/workflows/examples-quality.yml`
 - Contribution quality bar: [`docs/quality-bar.md`](docs/quality-bar.md)
 - Convenience command: `make validate`
 
 ## Incident and Cost Tooling
 
-- Incident playbooks: `docs/incidents/` (one runbook per example)
+- Incident playbooks: `docs/incidents/`
 - Cost estimator script: `scripts/estimate_costs.py`
-- Cost estimation guide: [`docs/cost-estimator.md`](docs/cost-estimator.md)
+- Cost estimator guide: [`docs/cost-estimator.md`](docs/cost-estimator.md)
+- Sizing formulas cheat sheet: [`docs/sizing-cheatsheet.md`](docs/sizing-cheatsheet.md)
+
+## Growth Assets
+
+- Promotion pack templates: [`docs/promo/launch-pack.md`](docs/promo/launch-pack.md)
+- Distribution checklist: [`docs/promo/distribution-checklist.md`](docs/promo/distribution-checklist.md)
+- Changelog: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## Optional Further Reading
 
-- Teaching playbook (draft guidance, adapt before real use): [`docs/teaching-playbook.md`](docs/teaching-playbook.md)
-- Production checklist (reference material, validate in your environment): [`docs/production-readiness-checklist.md`](docs/production-readiness-checklist.md)
+- Teaching playbook (draft guidance): [`docs/teaching-playbook.md`](docs/teaching-playbook.md)
+- Production checklist (validate in your environment): [`docs/production-readiness-checklist.md`](docs/production-readiness-checklist.md)
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 site_name: Terraform AI Examples
 site_description: Production-style AWS Terraform examples for learning, teaching, and real deployments.
-site_url: https://vedant-mhatre.github.io/terraform-ai-examples/
+site_url: https://blog.vmhatre.com/terraform-ai-examples/docs/
 repo_url: https://github.com/Vedant-Mhatre/terraform-ai-examples
 repo_name: Vedant-Mhatre/terraform-ai-examples
 edit_uri: edit/master/docs/
@@ -29,5 +29,9 @@ nav:
       - State Backend Incident: incidents/platform-hardened-terraform-state-backend.md
       - Cross-Account Role Incident: incidents/security-cross-account-terraform-deploy-role.md
   - Cost Estimation: cost-estimator.md
+  - Sizing Cheatsheet: sizing-cheatsheet.md
+  - Promotion Pack:
+      - Launch Pack: promo/launch-pack.md
+      - Distribution Checklist: promo/distribution-checklist.md
   - Production Readiness: production-readiness-checklist.md
   - Quality Bar: quality-bar.md

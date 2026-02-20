@@ -35,4 +35,10 @@ python3 scripts/estimate_costs.py --help
 
 - [Example Catalog](example-catalog.md)
 - [Cost Estimation Guide](cost-estimator.md)
+- [System Design Sizing Cheatsheet](sizing-cheatsheet.md)
 - [Production Readiness Checklist](production-readiness-checklist.md)
+
+## Support This Project
+
+If this repository helps you, consider starring it:
+<https://github.com/Vedant-Mhatre/terraform-ai-examples>
