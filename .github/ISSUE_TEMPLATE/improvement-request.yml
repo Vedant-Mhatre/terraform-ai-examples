@@ -1,0 +1,37 @@
+name: Improvement Request
+description: Suggest improvements to an existing example
+title: "[Improve]: "
+labels: ["enhancement"]
+body:
+  - type: input
+    id: example_path
+    attributes:
+      label: Example path
+      description: Which example needs improvement?
+      placeholder: examples/data/event-driven-ingestion-pipeline
+    validations:
+      required: true
+
+  - type: textarea
+    id: gap
+    attributes:
+      label: Current gap
+      description: What is missing or weak today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: What specific change should be made?
+    validations:
+      required: true
+
+  - type: textarea
+    id: learner_value
+    attributes:
+      label: Learning value
+      description: How does this improve teaching or real-world usefulness?
+    validations:
+      required: true

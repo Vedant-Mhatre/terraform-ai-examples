@@ -1,14 +1,20 @@
 # Cross-Account Terraform Deploy Role
 
-This example creates an IAM role in a target account that a CI/CD role in another account can assume.
+Provision a target-account IAM role that centralized CI/CD can assume safely for Terraform deployments.
 
 ## Architecture
 
 ![Cross Account Deploy Role Architecture](./architecture.svg)
 
-## Why This Is Useful
+## What You'll Learn
 
-Most teams run Terraform from a centralized build account but deploy into separate workload accounts. This is the baseline trust and permission pattern.
+- How to structure cross-account Terraform trust relationships.
+- How to enforce `external_id` and strict trusted principals.
+- How to choose between broad admin and scoped policy modes.
+
+## Real-World Use Case
+
+Common in organizations with centralized CI but isolated workload accounts. This approach lets platform teams govern deployment access while keeping account boundaries clear.
 
 ## Usage
 
@@ -19,8 +25,36 @@ terraform plan
 terraform apply
 ```
 
-## Security Notes
+## Validation Steps
 
-- Keep `external_id` secret and rotate periodically.
-- Prefer `allow_admin_access = false` and tighten scoped permissions over time.
-- Limit `trusted_principal_arns` to exact CI role ARNs.
+1. Confirm role output:
+
+```bash
+terraform output deploy_role_arn
+```
+
+2. Review generated provider assume-role snippet:
+
+```bash
+terraform output assume_role_snippet
+```
+
+3. From the trusted account, call STS assume-role with the correct external ID and confirm access works.
+
+## Cost and Safety
+
+- Estimated cost risk: low (IAM-only pattern).
+- Main risk is security misconfiguration, not infrastructure spend.
+- Built-in guardrails: explicit trusted principals, mandatory external ID, optional scoped policy mode.
+
+## Cleanup
+
+```bash
+terraform destroy
+```
+
+## Next Improvements
+
+- Add policy boundaries and session tag enforcement.
+- Add CloudTrail detection for unexpected assume-role attempts.
+- Restrict scoped actions further by resource ARNs per environment.

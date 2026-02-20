@@ -1,0 +1,39 @@
+name: New Example Request
+description: Propose a new Terraform example for this repository
+title: "[Example Request]: "
+labels: ["enhancement", "example-request"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Real-world problem
+      description: What real production problem should this example solve?
+      placeholder: Teams need...
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected learning outcome
+      description: What should learners understand after running this example?
+    validations:
+      required: true
+
+  - type: textarea
+    id: services
+    attributes:
+      label: AWS services involved
+      description: List the services and any constraints.
+      placeholder: ECS, ALB, SQS...
+    validations:
+      required: true
+
+  - type: textarea
+    id: risk
+    attributes:
+      label: Cost / risk notes
+      description: Any major spend, security, or operational risk?
+      placeholder: GPU instances can cost...
+    validations:
+      required: true

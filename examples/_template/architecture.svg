@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" role="img" aria-label="Example architecture placeholder">
+  <rect x="0" y="0" width="1000" height="420" fill="#0f172a"/>
+  <rect x="80" y="110" width="840" height="220" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="14"/>
+  <text x="120" y="180" fill="#e2f8ff" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Replace This With Real Architecture</text>
+  <text x="120" y="230" fill="#bae6fd" font-family="Segoe UI, Arial, sans-serif" font-size="22">Use meaningful components and arrows for your example.</text>
+</svg>
