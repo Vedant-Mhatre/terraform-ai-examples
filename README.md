@@ -11,7 +11,7 @@ If this repository helps your learning or projects, star it: [Star `terraform-ai
 ## Why This Repo (Instead of Just Asking ChatGPT/Claude)
 
 AI assistants generate snippets quickly, but learners and teams usually need more than snippets:
-- runnable, end-to-end example directories
+- well-structured, end-to-end example directories
 - architecture + code + validation in one place
 - system-design sizing math (capacity, latency, backlog, growth)
 - incident handling playbooks for failure scenarios
@@ -19,6 +19,11 @@ AI assistants generate snippets quickly, but learners and teams usually need mor
 - repeatable quality checks in CI
 
 Detailed rationale: [`docs/why-this-repo.md`](docs/why-this-repo.md).
+
+## Transparency Note
+
+I have not yet live-deployed all examples end-to-end myself in AWS.  
+Current verification status is tracked here: [`TESTING_STATUS.md`](TESTING_STATUS.md).
 
 ## Start In 5 Minutes
 

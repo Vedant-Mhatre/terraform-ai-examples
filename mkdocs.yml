@@ -13,6 +13,7 @@ theme:
 nav:
   - Home: index.md
   - Why This Repo: why-this-repo.md
+  - Testing Status: testing-status.md
   - Learning Paths: learning-paths.md
   - Teaching Playbook: teaching-playbook.md
   - Examples:

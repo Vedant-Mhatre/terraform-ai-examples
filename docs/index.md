@@ -24,6 +24,8 @@ Opinionated AWS Terraform examples designed for three outcomes:
 
 This repository is designed as practical learning material and starting points. Validate every pattern in your own AWS account and constraints before production use.
 
+Maintainer verification status is tracked in: [Testing Status](testing-status.md).
+
 ## Quick Commands
 
 ```bash
