@@ -55,8 +55,15 @@ variable "alb_allowed_cidrs" {
 }
 
 variable "acm_certificate_arn" {
-  description = "ACM certificate ARN used by the HTTPS ALB listener."
+  description = "Optional ACM certificate ARN. If set, ALB serves HTTPS and HTTP redirects to HTTPS."
   type        = string
+  default     = ""
+}
+
+variable "alb_ssl_policy" {
+  description = "SSL policy for ALB HTTPS listener when certificate is configured."
+  type        = string
+  default     = "ELBSecurityPolicy-FS-2018-06"
 }
 
 variable "gpu_instance_type" {

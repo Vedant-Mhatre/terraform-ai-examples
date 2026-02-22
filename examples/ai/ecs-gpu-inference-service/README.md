@@ -25,7 +25,7 @@ terraform plan
 terraform apply
 ```
 
-Set `acm_certificate_arn` in `terraform.tfvars` to a valid ACM certificate in the same region as the ALB.
+Set `acm_certificate_arn` in `terraform.tfvars` to enable HTTPS (recommended). If unset, the example serves HTTP-only for backward compatibility.
 
 ## Validation Steps
 
@@ -39,6 +39,8 @@ terraform output ecs_service_name
 2. Verify endpoint health:
 
 ```bash
+curl -i "http://$(terraform output -raw alb_dns_name)/healthz"
+# If acm_certificate_arn is set:
 curl -i "https://$(terraform output -raw alb_dns_name)/healthz"
 ```
 

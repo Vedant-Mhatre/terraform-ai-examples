@@ -9,6 +9,7 @@ locals {
   normalized_name   = replace(local.name, "_", "-")
   alb_name          = substr(local.normalized_name, 0, 32)
   target_group_name = "${substr(local.normalized_name, 0, 29)}-tg"
+  use_https         = var.acm_certificate_arn != ""
 }
 
 resource "aws_cloudwatch_log_group" "ecs" {
@@ -124,27 +125,40 @@ resource "aws_lb_target_group" "this" {
   }
 }
 
-resource "aws_lb_listener" "http_redirect" {
+resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
   protocol          = "HTTP"
 
-  default_action {
-    type = "redirect"
+  dynamic "default_action" {
+    for_each = local.use_https ? [1] : []
+    content {
+      type = "redirect"
 
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
+      redirect {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+  }
+
+  dynamic "default_action" {
+    for_each = local.use_https ? [] : [1]
+    content {
+      type             = "forward"
+      target_group_arn = aws_lb_target_group.this.arn
     }
   }
 }
 
 resource "aws_lb_listener" "https" {
+  count = local.use_https ? 1 : 0
+
   load_balancer_arn = aws_lb.this.arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  ssl_policy        = var.alb_ssl_policy
   certificate_arn   = var.acm_certificate_arn
 
   default_action {
@@ -370,7 +384,7 @@ resource "aws_ecs_service" "inference" {
   deployment_maximum_percent         = 200
 
   depends_on = [
-    aws_lb_listener.https,
+    aws_lb_listener.http,
     aws_ecs_cluster_capacity_providers.this
   ]
 }

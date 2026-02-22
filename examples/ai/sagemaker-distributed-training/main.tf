@@ -111,13 +111,25 @@ resource "aws_s3_bucket_versioning" "artifacts" {
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts_default" {
+  count  = var.kms_key_id == "" ? 1 : 0
   bucket = aws_s3_bucket.artifacts.id
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = var.kms_key_id != "" ? "aws:kms" : "AES256"
-      kms_master_key_id = var.kms_key_id != "" ? var.kms_key_id : null
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts_kms" {
+  count  = var.kms_key_id != "" ? 1 : 0
+  bucket = aws_s3_bucket.artifacts.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = var.kms_key_id
     }
   }
 }
