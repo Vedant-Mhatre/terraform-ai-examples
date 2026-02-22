@@ -5,7 +5,10 @@ data "aws_ssm_parameter" "ecs_gpu_ami" {
 }
 
 locals {
-  name = "${var.name_prefix}-${var.environment}"
+  name              = "${var.name_prefix}-${var.environment}"
+  normalized_name   = replace(local.name, "_", "-")
+  alb_name          = substr(local.normalized_name, 0, 32)
+  target_group_name = "${substr(local.normalized_name, 0, 29)}-tg"
 }
 
 resource "aws_cloudwatch_log_group" "ecs" {
@@ -61,6 +64,13 @@ resource "aws_security_group" "alb" {
     cidr_blocks = var.alb_allowed_cidrs
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = var.alb_allowed_cidrs
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -90,7 +100,7 @@ resource "aws_security_group" "service" {
 }
 
 resource "aws_lb" "this" {
-  name               = substr(replace(local.name, "_", "-"), 0, 32)
+  name               = local.alb_name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
@@ -98,7 +108,7 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name        = substr("${replace(local.name, "_", "-")}-tg", 0, 32)
+  name        = local.target_group_name
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -114,10 +124,28 @@ resource "aws_lb_target_group" "this" {
   }
 }
 
-resource "aws_lb_listener" "http" {
+resource "aws_lb_listener" "http_redirect" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
   protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.this.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_certificate_arn
 
   default_action {
     type             = "forward"
@@ -342,7 +370,7 @@ resource "aws_ecs_service" "inference" {
   deployment_maximum_percent         = 200
 
   depends_on = [
-    aws_lb_listener.http,
+    aws_lb_listener.https,
     aws_ecs_cluster_capacity_providers.this
   ]
 }

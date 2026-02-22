@@ -54,6 +54,11 @@ variable "alb_allowed_cidrs" {
   default     = ["0.0.0.0/0"]
 }
 
+variable "acm_certificate_arn" {
+  description = "ACM certificate ARN used by the HTTPS ALB listener."
+  type        = string
+}
+
 variable "gpu_instance_type" {
   description = "EC2 instance type for GPU worker nodes."
   type        = string

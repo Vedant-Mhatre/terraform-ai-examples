@@ -27,43 +27,47 @@ locals {
     var.use_spot_instances ? { MaxWaitTimeInSeconds = var.max_wait_seconds } : {}
   )
 
-  training_step_arguments = {
-    AlgorithmSpecification = {
-      TrainingImage     = var.training_image_uri
-      TrainingInputMode = "File"
-    }
-    HyperParameters = var.hyperparameters
-    InputDataConfig = [
-      {
-        ChannelName = "training"
-        DataSource = {
-          S3DataSource = {
-            S3DataType             = "S3Prefix"
-            S3Uri                  = { Get = "Parameters.InputDataS3Uri" }
-            S3DataDistributionType = "FullyReplicated"
-          }
-        }
-        InputMode = "File"
+  training_step_arguments = merge(
+    {
+      AlgorithmSpecification = {
+        TrainingImage     = var.training_image_uri
+        TrainingInputMode = "File"
       }
-    ]
-    OutputDataConfig = local.training_output_data_config
-    ResourceConfig = {
-      InstanceCount  = { Get = "Parameters.InstanceCount" }
-      InstanceType   = { Get = "Parameters.InstanceType" }
-      VolumeSizeInGB = var.volume_size_gb
-    }
-    StoppingCondition         = local.training_stopping_condition
-    EnableManagedSpotTraining = var.use_spot_instances
-    CheckpointConfig = {
-      S3Uri     = "s3://${aws_s3_bucket.artifacts.bucket}/${local.checkpoint_prefix}"
-      LocalPath = "/opt/ml/checkpoints"
-    }
-    VpcConfig = {
-      SecurityGroupIds = [aws_security_group.training.id]
-      Subnets          = var.private_subnet_ids
-    }
-    RoleArn = aws_iam_role.sagemaker_execution.arn
-  }
+      HyperParameters = var.hyperparameters
+      InputDataConfig = [
+        {
+          ChannelName = "training"
+          DataSource = {
+            S3DataSource = {
+              S3DataType             = "S3Prefix"
+              S3Uri                  = { Get = "Parameters.InputDataS3Uri" }
+              S3DataDistributionType = "FullyReplicated"
+            }
+          }
+          InputMode = "File"
+        }
+      ]
+      OutputDataConfig = local.training_output_data_config
+      ResourceConfig = {
+        InstanceCount  = { Get = "Parameters.InstanceCount" }
+        InstanceType   = { Get = "Parameters.InstanceType" }
+        VolumeSizeInGB = var.volume_size_gb
+      }
+      StoppingCondition         = local.training_stopping_condition
+      EnableManagedSpotTraining = var.use_spot_instances
+      VpcConfig = {
+        SecurityGroupIds = [aws_security_group.training.id]
+        Subnets          = var.private_subnet_ids
+      }
+      RoleArn = aws_iam_role.sagemaker_execution.arn
+    },
+    var.use_spot_instances ? {
+      CheckpointConfig = {
+        S3Uri     = "s3://${aws_s3_bucket.artifacts.bucket}/${local.checkpoint_prefix}"
+        LocalPath = "/opt/ml/checkpoints"
+      }
+    } : {}
+  )
 
   pipeline_definition = jsonencode({
     Version = "2020-12-01"

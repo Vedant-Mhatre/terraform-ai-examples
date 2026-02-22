@@ -25,6 +25,8 @@ terraform plan
 terraform apply
 ```
 
+Set `acm_certificate_arn` in `terraform.tfvars` to a valid ACM certificate in the same region as the ALB.
+
 ## Validation Steps
 
 1. Check ECS resources:
@@ -37,7 +39,7 @@ terraform output ecs_service_name
 2. Verify endpoint health:
 
 ```bash
-curl -i "http://$(terraform output -raw alb_dns_name)/healthz"
+curl -i "https://$(terraform output -raw alb_dns_name)/healthz"
 ```
 
 3. Verify ECS tasks are placed on GPU hosts and passing health checks.
@@ -84,6 +86,5 @@ terraform destroy
 
 ## Next Improvements
 
-- Add HTTPS listener + ACM certificate for production traffic.
 - Add request-rate and latency-based autoscaling policy.
 - Add blue/green deployment strategy (CodeDeploy or dual target groups).

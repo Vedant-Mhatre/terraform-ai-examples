@@ -58,7 +58,8 @@ resource "aws_sqs_queue" "dlq" {
 }
 
 resource "aws_sqs_queue" "events" {
-  name                       = "${local.name}-events"
+  name = "${local.name}-events"
+  # AWS guidance for SQS event sources is typically >= 6x Lambda timeout.
   visibility_timeout_seconds = var.lambda_timeout_seconds * 6
 
   redrive_policy = jsonencode({
@@ -189,10 +190,11 @@ resource "aws_lambda_function" "processor" {
 }
 
 resource "aws_lambda_event_source_mapping" "sqs" {
-  event_source_arn = aws_sqs_queue.events.arn
-  function_name    = aws_lambda_function.processor.arn
-  batch_size       = 10
-  enabled          = true
+  event_source_arn        = aws_sqs_queue.events.arn
+  function_name           = aws_lambda_function.processor.arn
+  batch_size              = 10
+  enabled                 = true
+  function_response_types = ["ReportBatchItemFailures"]
 }
 
 resource "aws_cloudwatch_metric_alarm" "dlq_visible_messages" {
